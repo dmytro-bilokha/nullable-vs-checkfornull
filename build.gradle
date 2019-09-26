@@ -1,0 +1,37 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+    // Apply the application plugin to add support for building an application
+    id "com.github.spotbugs" version "1.6.5"
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    //jcenter()
+}
+
+dependencies {
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
+    // Use TestNG framework, also requires calling test.useTestNG() below
+    testImplementation 'org.testng:testng:6.14.3'
+}
+
+// Define the main class for the application
+mainClassName = 'com.dmytrobilokha.nullablevscheckfornull.App'
+
+test {
+    // Use TestNG for unit tests
+    useTestNG()
+}
+
+ext {
+    SpotBugsTask = com.github.spotbugs.SpotBugsTask
+}
+
+tasks.withType(SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
